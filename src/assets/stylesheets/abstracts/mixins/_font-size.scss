@@ -1,0 +1,11 @@
+// Function to convert pixels to rems
+@function px-to-rem($size) {
+  @return ($size/$default-font-size-int) + rem;
+}
+
+@mixin font-size($size, $lh:true) {
+  font-size: ($size)+px;
+  font-size: px-to-rem($size);
+
+  @if $lh { line-height: $default-line-height; }
+}

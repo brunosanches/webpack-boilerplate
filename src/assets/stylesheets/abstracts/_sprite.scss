@@ -1,0 +1,22 @@
+%svg-common {
+  background: url("/assets/images/sprite.png");
+  background: url("/assets/images/sprite.svg"),
+    linear-gradient(transparent, transparent);
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.svg-logo {
+  @extend %svg-common;
+  background-size: 100%;
+  background-position: 0 0;
+  width: 60px;
+  height: 60px;
+}
+%svg-logo{
+  background-size: 100%;
+  background-position: 0 0;
+  width: 60px;
+  height: 60px;
+}
+

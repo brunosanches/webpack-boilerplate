@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700,700i');
+
+h1 {
+  @include font-size(57);
+}
+
+h2 {
+  @include font-size(38);
+}
+
+h3 {
+  @include font-size(25);
+}

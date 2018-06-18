@@ -1,0 +1,24 @@
+%svg-common {
+  background: url("/assets/images/sprite.png");
+  background: url("/assets/images/sprite.svg"),
+    linear-gradient(transparent, transparent);
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+{{#shapes}}
+{{#selector.shape}}{{expression}}{{/selector.shape}} {
+  @extend %svg-common;
+  background-size: {{#backgroundsize}}{{spriteWidth}},{{width.outer}}{{/backgroundsize}}%;
+  background-position: {{position.relative.xy}};
+  width: {{width.outer}}px;
+  height: {{height.outer}}px;
+}
+%{{#selector.shape}}svg-{{base}}{{/selector.shape}}{
+  background-size: {{#backgroundsize}}{{spriteWidth}},{{width.outer}}{{/backgroundsize}}%;
+  background-position: {{position.relative.xy}};
+  width: {{width.outer}}px;
+  height: {{height.outer}}px;
+}
+
+{{/shapes}}

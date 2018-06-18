@@ -1,0 +1,18 @@
+// ==========================================================================
+//
+// STRUCTURE BASE PROJECT
+// based: https://sass-guidelin.es/#architecture
+//
+// ==========================================================================
+// import application styles
+@import
+  'abstracts/variables',
+  'abstracts/sprite',
+  'abstracts/mixins/all',
+  'abstracts/placeholders/all';
+
+  @import
+    'base/all';
+
+  @import
+    'layout/all';

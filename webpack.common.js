@@ -1,17 +1,20 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: {
-    app: './src/assets/javascripts/main.js'
+    app: [
+      path.resolve(__dirname, 'src/assets/javascripts/main.js'),
+      path.resolve(__dirname, 'src/assets/stylesheets/main.scss')
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/assets/views/index.pug'),
-      title: 'Boilerplate Webpack'
+      title: 'Boilerplate Webpack 4'
     }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: 'assets/stylesheets/[name].min.css'
     })
   ],
@@ -39,34 +42,14 @@ module.exports = {
         }
       },
 
-      // CSS
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      },
-
-      // SCSS
-      {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            { loader: 'css-loader' },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                sourceMap: 'inline',
-                plugins: (loader) => [
-                  require('autoprefixer')(),
-                  require('css-mqpacker')(),
-                  require('cssnano')()
-                ]
-              }
-            },
-            { loader: 'sass-loader' }
-          ]
-        })
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' }
+        ]
       },
 
       // IMAGE

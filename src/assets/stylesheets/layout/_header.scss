@@ -1,38 +1,9 @@
 header {
   @extend .container;
-  height: 130px;
-  background: #f2f2f2;
 
   @at-root {
     .header {
       &-box {
-        display: flex;
-        align-items: center;
-        height: 76px;
-
-        &_social {
-          flex: 2;
-        }
-
-        &_logo {
-          flex: 1;
-          text-align: center;
-        }
-
-        &_resources {
-          flex: 2;
-          display: flex;
-
-          &-links {
-            flex: auto;
-          }
-
-          &-user {
-          }
-        }
-      }
-
-      &-nav {
         display: flex;
         align-items: center;
         justify-content: center;

@@ -1,0 +1,66 @@
+/// Grid system
+//
+@mixin make-container() {
+  width: 100%;
+  padding-right: $grid-gutter-width;
+  padding-left: $grid-gutter-width;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@mixin make-row() {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin-right: ($grid-gutter-width * -1);
+  margin-left: ($grid-gutter-width * -1);
+}
+
+@mixin make-col($size) {
+  $percent: percentage($size / $grid-columns);
+  @if ($size != $grid-columns) {
+    $percent: calc(#{$percent} - #{$grid-gutter-width});
+  }
+
+  flex-basis: $percent;
+  width: $percent;
+}
+
+@mixin make-grid-columns() {
+  // Common properties for all breakpoints
+  %grid-column {
+    position: relative;
+    width: 100%;
+    min-height: 1px; // Prevent columns from collapsing when empty
+  }
+
+  .col,
+  .col-auto {
+    @extend %grid-column;
+  }
+
+  .col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+  .col-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none; // Reset earlier grid tiers
+  }
+
+  // Allow columns to stretch full width below their breakpoints
+  @for $i from 1 through $grid-columns {
+    .col-#{$i} {
+      @extend %grid-column;
+      @include make-col($i);
+    }
+  }
+
+  .order-first { order: -1; }
+  .order-last { order: $grid-columns + 1; }
+  @for $i from 0 through $grid-columns {
+    .order-#{$i} { order: $i; }
+  }
+}

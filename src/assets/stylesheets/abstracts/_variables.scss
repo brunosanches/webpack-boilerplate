@@ -5,38 +5,41 @@
 // //== Colors
 // //
 //
-$gray-base:             #212121 !default;
+$gray-21:   #212121 !default;
+$white:     #fff !default;
 
 
 // //== Configs GRID
 // //
 //
-$grid-max-width: 1366px !default;
-$grid-margin: 0.52083% !default;
-$grid-padding: 16px !default;
-$grid-column_number: 12 !default;
-$grid-column_width: (100%/$grid-column_number) - 2*$grid-margin !default;
+$grid-max-width:    1240px !default;
+$grid-columns:      12 !default;
+$grid-gutter-width: 20px !default;
 
-
-// //== Scaffolding
-// //
-//
-$white: #fff !default;
-
+$breakpoints: (
+  "phone":        400px,
+  "phone-wide":   480px,
+  "phablet":      560px,
+  "tablet-small": 640px,
+  "tablet":       768px,
+  "tablet-wide":  1024px,
+  "desktop":      1248px,
+  "desktop-wide": 1440px
+);
 
 //
 // //== Typography
 // //
 //
 $font-family:  'PT Sans', sans-serif !default;
-$default-font-size: 18px !default;
-$default-font-size-int: 18 !default;
+$default-font-size: 16px !default;
+$default-font-size-int: 16 !default;
 $default-line-height: 1.33 !default;
 
 :root {
   font-family: $font-family;
   font-size: $default-font-size;
   line-height: $default-line-height;
-  color: $gray-base;
+  color: $gray-21;
   background-color: $white;
 }

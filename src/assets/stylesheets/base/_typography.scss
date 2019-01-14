@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700,700i');
 
+body {
+  font-family: sans-serif;
+}
+
 h1 {
   @include font-size(57);
+  margin-top: 36px;
+  margin-bottom: 16px;
 }

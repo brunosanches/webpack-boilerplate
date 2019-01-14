@@ -5,38 +5,39 @@ const glob = require('glob')
 const fs = require('fs')
 const path = require('path')
 const cwd = path.resolve('./src/assets/images/svgs')
+const { exec } = require('child_process')
 
 const spriter = new SVGSpriter({
-  dest: path.resolve('./src/assets'),
+  dest: path.resolve('./src'),
   mode: {
     css: {
-      dest: 'stylesheets/abstracts',
-      sprite: path.resolve('./src/assets/images/sprite.svg'),
+      dest: '.',
+      sprite: `assets/images/sprite.svg`,
       bust: false,
       render: {
         scss: {
-          dest: '_sprite.scss',
-          template: path.resolve('./utils/svg-sprite/tmpl/template.scss')
+          dest: 'assets/stylesheets/abstracts/_sprite.scss',
+          template: path.resolve(__dirname, 'tmpl', 'template.scss')
         }
       },
       variables: {
         png: () => (spriter, render) => render(spriter).split('.svg').join('.png'),
         backgroundsize: () => (spriteAndPath, render) => {
-          const paths = render(spriteAndPath).split(',');
+          const paths = render(spriteAndPath).split(',')
           return (paths[0] / paths[1]) * 100
         }
       },
       example: {
-        dest: path.resolve('./utils/svg-sprite/preview-sprite-svg-scss.html')
+        dest: path.resolve(__dirname, 'preview-sprite-svg-scss.html')
       }
     }
   }
 })
 
 // Find SVG files recursively via `glob`
-glob.glob('**/*.svg', { cwd: cwd }, function (err, files) {
-  if (err) {
-    console.log(err)
+glob.glob('**/*.svg', { cwd: cwd }, function (error, files) {
+  if (error) {
+    console.log(error)
   }
 
   files.forEach(function (file) {
@@ -52,8 +53,30 @@ glob.glob('**/*.svg', { cwd: cwd }, function (err, files) {
       console.log(error)
     }
     for (var type in result.css) {
-      mkdirp.sync(path.dirname(result.css[type].path))
-      fs.writeFileSync(result.css[type].path, result.css[type].contents)
+      let svg = result.css[type].path
+      mkdirp.sync(path.dirname(svg))
+
+      if (type === 'sprite') {
+        let png = svg.split('.svg')[0] + '.png'
+
+        // delete file if exist
+        if (fs.existsSync(png)) {
+          fs.unlink(png, (err) => {
+            if (err) throw err
+            console.log(`${png} was deleted`)
+          })
+        }
+
+        // convert svg in png
+        exec(`svg2png "${svg}" --output="${png}"`, (err, stdout, stderr) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+          console.log(`Your SVG and clone PNG file was create!`)
+        })
+      }
+      fs.writeFileSync(svg, result.css[type].contents)
     }
   })
 })
